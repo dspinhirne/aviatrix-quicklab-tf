@@ -79,8 +79,8 @@ Store your personalized data in this file. Sample below:
     }
 
     provider "aws" {
-    region                   = var.region
-    shared_credentials_files = ["~/.aws/credentials"]
+        region                   = var.region
+        shared_credentials_files = ["~/.aws/credentials"]
     }
 
 
@@ -221,7 +221,7 @@ From the top-level directory:
 
 
 ## Variables
-The following describes the variables supported within the terraform.tf file.
+The following describes the variables supported within the terraform.tf file. See sample file.
 
 
 ### Inbound Access

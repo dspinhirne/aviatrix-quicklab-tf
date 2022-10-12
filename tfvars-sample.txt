@@ -1,0 +1,97 @@
+# defines inbound rules for security groups.
+permitted_prefixes = ["0.0.0.0/0"]
+
+csps = {
+    aws = {
+        account: "aws-lab"  //change me
+        region: "us-east-1"
+    }
+    azure = {}
+}
+
+aws_csr_settings = {
+    username = "admin"
+    password = "changeme"   //change me
+    keypair = "aws-lab"
+    size = "t2.medium"
+    amis = {
+        "us-east-1" = "ami-06673acad74a19508"
+    }
+}
+
+# avx transit gateway definitions
+transits = {
+    transit1 = {
+        csp: "aws"
+        prefix: "10.1.0.0/23"
+        enable_ha: true
+        enable_segmentation: true
+    }
+    transit2 = {
+        csp: "aws"
+        prefix: "10.1.2.0/23"
+        enable_ha: true
+        enable_segmentation: true
+    }
+}
+
+# avx transit gateway peering
+transit_peerings = [
+    {peer1:"transit1", peer2:"transit2"},
+]
+
+# avx spoke gateway definitions
+spokes = {
+    spoke1: {
+        csp: "aws"
+        prefix: "10.1.4.0/24"
+        enable_ha: true
+        enable_bgp: true
+    }
+    spoke2: {
+        csp: "aws"
+        prefix: "10.1.5.0/24"
+        enable_ha: true
+    }
+}
+
+
+# avx spoke to transit attachments
+spoke_transit_attachments = [
+    {spoke: "spoke1", transit: "transit1"},
+    {spoke: "spoke2", transit: "transit2"},
+]
+
+
+# avx network network segmentation
+net_seg_domains = ["shared", "prod", "dev"]
+net_seg_connection_policies = [
+    {d1: "shared", d2: "prod"},
+    {d1: "shared", d2: "dev"},
+]
+net_seg_associations = {
+    "prod": {transit: "transit1", spoke: "spoke1"}
+    "dev": {transit: "transit1", spoke: "spoke1"}
+}
+
+
+# avx external connections
+external_connections = {
+    "spoke1_csr" = {
+        gw_type: "spoke"
+        gw_name: "spoke1"
+        local_bgp_asn: 64701
+        external_peer: {type: "aws_csr", prefix: "10.100.2.0/24", bgp_asn:65102}
+    }
+}
+
+# Site to Cloud
+s2c = {
+    "spoke2_vgw" = {
+        disabled = true
+        gw_type: "spoke"
+        gw_name: "spoke2"
+        external_peer: {type: "aws_vgw", prefix: "10.100.1.0/24"}
+        mapped: {cloud_prefix: "10.0.0.0/16", cloud_virtual: "10.100.0.0/16", site_prefix:"10.10.0.0/24", site_virtual:"10.200.0.0/24"}
+    }
+}
