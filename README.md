@@ -30,6 +30,7 @@ deploy components (or use additional TF files), then you destroy these additiona
 This section only needs to be completed once. It will install a python virtual env that is required to build the controller.
 
 From the top-level directory:
+
     cd avx-control-aws
     python3 -m venv venv
     source venv/bin/activate
@@ -39,6 +40,7 @@ From the top-level directory:
 
 ### Create terraform.tfvars
 This section only needs to be completed once. From the top-level directory:
+
     cd avx-control-aws
     touch terraform.tfvars
 
@@ -62,6 +64,7 @@ Store your personalized data in this file. Sample below:
 
 ### Create provider.tf
 This section only needs to be completed once. From the top-level directory:
+
     cd avx-control-aws
     touch provider.tf
 
@@ -119,6 +122,7 @@ Note that there is a bug that prevents Terraform from destroying the VPCs create
 
 ## Create terraform.tfvars
 This section only needs to be completed once, and only if you want to use Azure. From the top-level directory:
+
     cd avx-access-accounts
     touch terraform.tfvars
 
@@ -155,6 +159,7 @@ This step should be run once per controller deploy. It will skip accounts that a
 
 ## Create terraform.tfvars
 This section only needs to be completed once. From the top-level directory:
+
     cd avx-control-aws
     touch terraform.tfvars
 
@@ -163,6 +168,7 @@ This file will contain the structure for your lab setup. Details below
 
 ## Create provider.tf
 This section only needs to be completed once. From the top-level directory:
+
     cd avx-control-aws
     touch provider.tf
 
