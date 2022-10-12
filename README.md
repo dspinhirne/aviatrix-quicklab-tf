@@ -46,7 +46,6 @@ This section only needs to be completed once. From the top-level directory:
 
 Store your personalized data in this file. Sample below:
 
-    credentials_file = "~/.aws/credentials"
     admin_email = "user@localdomain"   // controller will email you here
     admin_password = "changeme"        // login password for user 'admin'
     access_account_name = "changeme"    // label for your aws account within the controller
@@ -71,14 +70,14 @@ This section only needs to be completed once. From the top-level directory:
 Store your personalized data in this file. Sample below:
 
     terraform {
-    required_providers {
-        aviatrix = {
-        source = "AviatrixSystems/aviatrix"
+        required_providers {
+            aviatrix = {
+            source = "AviatrixSystems/aviatrix"
+            }
+            aws = {
+            source  = "hashicorp/aws"
+            }
         }
-        aws = {
-        source  = "hashicorp/aws"
-        }
-    }
     }
 
     provider "aws" {
@@ -206,6 +205,7 @@ Store your personalized data in this file. Sample below:
     }
 
     /*
+    # uncomment this if you want to use azure
     provider "azurerm" {
         tenant_id       = var.csps.azure.dir_id
         subscription_id = var.csps.azure.sub_id
@@ -261,8 +261,8 @@ Only 1 region per CSP. Only AWS and Azure supported. You must define at least 1 
 This is optional and sets the default gateway sizes used in the lab. You only need to set this if you want to change the defaults. Defaults are shown below.
 
     gw_sizes = {
-    aws: {sm: "t3.small", lg: "c5.xlarge"}
-    azure: {sm: "Standard_B1ms", lg: "Standard_B1ms"}
+        aws: {sm: "t3.small", lg: "c5.xlarge"}
+        azure: {sm: "Standard_B1ms", lg: "Standard_B1ms"}
     }
 
 The small size is used for non HPE setups. The large size is used for HPE.
@@ -330,7 +330,7 @@ Example below showing a single spoke with config options.
 Defines attachments. Use the gw names defined in your transit and spoke definitions.
 
     spoke_transit_attachments = [
-        //{spoke: "spoke2", transit: "transit1"},
+        {spoke: "spoke2", transit: "transit1"},
     ]
 
 ### Network Segmentation
